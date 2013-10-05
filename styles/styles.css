@@ -68,7 +68,7 @@ header ul li:last-child {
     height: 20px;
     margin: 1px auto;
     width: 200px;
-    cursor: pointer;
+    cursor: move;
     background-color: grey;
     -moz-box-shadow: inset 0 0 5px 5px #888;
     -webkit-box-shadow: inset 0 0 5px 5px#888;
@@ -84,7 +84,14 @@ header ul li:last-child {
 .hoop5 {background-color: #56c5ff; width: 100px;}
 .hoop6 {background-color: #2673ec; width: 80px;}
 .hoop7 {background-color: #A200FF; width: 60px;}
-
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
 
 
 
