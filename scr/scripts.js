@@ -2,12 +2,16 @@ var dragSrcEl = null;
 var cols = document.querySelectorAll('.hoop');
 var towers = document.querySelectorAll('.tower-wrapper');
 
-[].forEach.call(cols, function(col) {
-    col.setAttribute('draggable','true')
+[].forEach.call(cols, function(col, index) {
+    //console.log(index)
+    if (index == 0) {
+        col.setAttribute('draggable','true')
+    }
     col.addEventListener('dragstart', handleDragStart, false);
     col.addEventListener('dragleave', handleDragLeave, false);
     col.addEventListener('drop', handleDrop, false);
     col.addEventListener('dragend', handleDragEnd, false);
+    console.log(8)
 });
 [].forEach.call(towers, function(tower) {
     tower.addEventListener('dragenter', handleDragEnter, false)
@@ -20,6 +24,8 @@ function handleDragStart(e) {
     dragSrcEl = this;
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
+    //console.log(this.nextSibling.nextElementSibling)
+    this.nextElementSibling ? this.nextElementSibling.setAttribute('draggable','true') : '';
 }
 
 function handleDragOver(e) {
@@ -33,11 +39,13 @@ function handleDragOver(e) {
 function handleDragEnter(e) {
     // this / e.target is the current hover target.
     this.children[0].insertBefore(dragSrcEl, this.children[0].firstChild);
+    //console.log(this)
 }
 
 function handleDragLeave(e) {
     // this / e.target is previous target element.
     /*this.classList.remove('over');*/  
+    //console.log(99)
 }
 
 function handleDrop(e) {
@@ -51,15 +59,23 @@ function handleDrop(e) {
         dragSrcEl.innerHTML = this.innerHTML;
         this.innerHTML = e.dataTransfer.getData('text/html');
     }
+    //console.log(0)
     return false;
 }
 
 function handleDragEnd(e) {
+    console.log(99)
     // this/e.target is the source node.
     /*[].forEach.call(cols, function (col) {
-        col.classList.remove('over');
+        //col.classList.remove('over');
+        //col.style.opacity = '1';
     });*/
     this.style.opacity = '1';
+    console.log(this)
+    //console.log(this.nextElementSibling)
+    //this.nextSibling.nextElementSibling.removeAttribute('draggable')
+    this.nextElementSibling ? this.nextElementSibling.removeAttribute('draggable') : '';
+    
 }
 
 
