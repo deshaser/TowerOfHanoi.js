@@ -9,6 +9,24 @@
     </head>
     
     <body>
+        <section id="newGame" class="new-game">
+            <div class="white-control" title="Rules">?</div>
+            <div class="new-game--title">
+                New Game
+            </div>
+            <label class="new-game--label">
+                <span>The number of hoops</span>
+                <input type="number" autofocus min="3" max="7" name="numberOfHoops" maxlength="1" size="4" pattern="\d [3-7]" required value="5" />
+            </label>
+            <input class="new-game--submit" type="submit" value="Start" />
+        </section>
+        <section id="rules" class="rules hide">
+            <div class="white-control" title="Close">X</div>
+            Try to move all the disks from TOWER 1 to TOWER 3.<br />
+            You may only move one disk at a time.<br /><br />
+            You must never allow a bigger disk to go on top of a smaller disk.
+        </section>
+        <section id="shadow" class="shadow"></section>
         <section class="wrapper">
             <header>
                 <ul>
