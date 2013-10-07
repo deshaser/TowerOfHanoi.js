@@ -6,10 +6,12 @@ var closeRules = document.getElementById('closeRules');
 var shadow = document.getElementById('shadow');
 var newGame = document.getElementById('newGame');
 var tower1 = document.getElementById('tower1');
+var tower3 = document.getElementById('tower3');
 var resetMenu = document.getElementById('resetMenu');
 var rulesMenu = document.getElementById('rulesMenu');
 var j = 7; // Max number of hoop.
 var state; // State from closeRulesButton.
+var number; // Number inserted hoops.
 var dragSrcEl = null;
 var cols = document.querySelectorAll('.hoop');
 var towers = document.querySelectorAll('.tower-wrapper');
@@ -43,7 +45,7 @@ function closeRulesClick() {
 } 
 function startClick() {
     state = 1;
-    var number = parseInt(numberOfHoops.value);
+    number = parseInt(numberOfHoops.value);
     if (typeof number == 'number' && number >= 3 && number <=7 ) {
         var els = document.createDocumentFragment();
         var el;
@@ -136,6 +138,9 @@ function handleDragEnd(e) {
         nextEl.removeAttribute('draggable');
     };
     this.parentNode.setAttribute('data-topHoopID', dragSrcEl.getAttribute('data-hoopID'));
+    if (tower3.children.length == number) {
+        alert('Congratulations! \nYou have completed the puzzle.');
+    };
 }
 
 
