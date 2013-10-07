@@ -9,10 +9,15 @@ var tower1 = document.getElementById('tower1');
 var tower3 = document.getElementById('tower3');
 var resetMenu = document.getElementById('resetMenu');
 var rulesMenu = document.getElementById('rulesMenu');
+var countIterationsEl = document.getElementById('countIterationsEl');
+var timerEl = document.getElementById('timer');
 var j = 7; // Max number of hoop.
 var state; // State from closeRulesButton.
 var number; // Number inserted hoops.
+var countIterations = 0; // The number drag&drop iterations.
 var dragSrcEl = null;
+var timerId;
+var timerSum = 0; // The passing game, in sec.
 var cols = document.querySelectorAll('.hoop');
 var towers = document.querySelectorAll('.tower-wrapper');
 
@@ -34,12 +39,14 @@ function rulesButtonClick() {
 function rulesMenuClick() {
     rules.classList.remove('hide');
     shadow.classList.remove('hide');
+    clearInterval(timerId);
 }
 function closeRulesClick() {
     if (state != 1) {
         newGame.classList.remove('hide');
     } else {
         shadow.classList.add('hide');
+        timer();
     }
     rules.classList.add('hide');
 } 
@@ -68,6 +75,7 @@ function startClick() {
         tower1.appendChild(els);
         newGame.classList.add('hide');
         shadow.classList.add('hide');
+        timer();
     } else {
         alert('Enter a number from 3 to 7');
     }
@@ -75,7 +83,14 @@ function startClick() {
 function resetMenuClick() {
     newGame.classList.remove('hide');
     shadow.classList.remove('hide');
+    clearInterval(timerId);
 } 
+function timer() {
+    timerId = setInterval(function() {
+        timerSum++;
+        timerEl.innerHTML = timerSum;
+    }, 1000);
+}
 
 function handleDragStart(e) {
     // this / e.target is the source node.
@@ -138,7 +153,10 @@ function handleDragEnd(e) {
         nextEl.removeAttribute('draggable');
     };
     this.parentNode.setAttribute('data-topHoopID', dragSrcEl.getAttribute('data-hoopID'));
+    countIterations++;
+    countIterationsEl.innerHTML = countIterations;
     if (tower3.children.length == number) {
+        clearInterval(timerId);
         alert('Congratulations! \nYou have completed the puzzle.');
     };
 }
