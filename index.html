@@ -7,21 +7,20 @@
         <link rel="stylesheet" href="styles/reset.css" type="text/css" />
         <link rel="stylesheet" href="styles/styles.css" type="text/css" media="screen" />
     </head>
-    
     <body>
         <section id="newGame" class="new-game">
-            <div class="white-control" title="Rules">?</div>
+            <div id="rules-button" class="white-control" title="Rules">?</div>
             <div class="new-game--title">
                 New Game
             </div>
             <label class="new-game--label">
                 <span>The number of hoops</span>
-                <input type="number" autofocus min="3" max="7" name="numberOfHoops" maxlength="1" size="4" pattern="\d [3-7]" required value="5" />
+                <input id="numberOfHoops" type="number" value="5" min="3" max="7" name="numberOfHoops" maxlength="1" size="4" pattern="\d [3-7]" required autofocus />
             </label>
-            <input class="new-game--submit" type="submit" value="Start" />
+            <input id="start" class="new-game--submit" type="submit" value="Start" />
         </section>
         <section id="rules" class="rules hide">
-            <div class="white-control" title="Close">X</div>
+            <div id="closeRules" class="white-control" title="Close">X</div>
             Try to move all the disks from TOWER 1 to TOWER 3.<br />
             You may only move one disk at a time.<br /><br />
             You must never allow a bigger disk to go on top of a smaller disk.
@@ -30,21 +29,13 @@
         <section class="wrapper">
             <header>
                 <ul>
-                   <li>Reset</li>
-                   <li>Rules</li>
+                   <li id="resetMenu">Reset</li>
+                   <li id="rulesMenu">Rules</li>
                 </ul>
             </header>
             <section class="content">
                 <section class="tower-wrapper">
-                    <ul class="tower">
-                        <li class="hoop hoop7" hoopID="7"></li>
-                        <li class="hoop hoop6" hoopID="6"></li>
-                        <li class="hoop hoop5" hoopID="5"></li>
-                        <li class="hoop hoop4" hoopID="4"></li>
-                        <li class="hoop hoop3" hoopID="3"></li>
-                        <li class="hoop hoop2" hoopID="2"></li>
-                        <li class="hoop hoop1" hoopID="1"></li>
-                    </ul>
+                    <ul id="tower1" class="tower"></ul>
                 </section>
                 <section class="tower-wrapper">
                     <ul class="tower"></ul>

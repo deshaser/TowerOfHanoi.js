@@ -1,18 +1,79 @@
+var rules = document.getElementById('rules');
+var rulesButton = document.getElementById('rules-button');
+var numberOfHoops = document.getElementById('numberOfHoops');
+var start = document.getElementById('start');
+var closeRules = document.getElementById('closeRules');
+var shadow = document.getElementById('shadow');
+var newGame = document.getElementById('newGame');
+var tower1 = document.getElementById('tower1');
+var resetMenu = document.getElementById('resetMenu');
+var rulesMenu = document.getElementById('rulesMenu');
+var j = 7; // Max number of hoop.
+var state; // State from closeRulesButton.
 var dragSrcEl = null;
 var cols = document.querySelectorAll('.hoop');
 var towers = document.querySelectorAll('.tower-wrapper');
 
-cols[0].setAttribute('draggable','true');
-[].forEach.call(cols, function(col, index) {
-    col.addEventListener('dragstart', handleDragStart, false);
-    col.addEventListener('dragleave', handleDragLeave, false);
-    col.addEventListener('drop', handleDrop, false);
-    col.addEventListener('dragend', handleDragEnd, false);
-});
+rulesButton.addEventListener('click', rulesButtonClick, false);
+rulesMenu.addEventListener('click', rulesMenuClick, false);
+closeRules.addEventListener('click', closeRulesClick, false);
+start.addEventListener('click', startClick, false);
+resetMenu.addEventListener('click', resetMenuClick, false);
+    
 [].forEach.call(towers, function(tower) {
     tower.addEventListener('dragenter', handleDragEnter, false);
     tower.addEventListener('dragover', handleDragOver, false);
 });
+        
+function rulesButtonClick() {
+    newGame.classList.add('hide');
+    rules.classList.remove('hide');
+}
+function rulesMenuClick() {
+    rules.classList.remove('hide');
+    shadow.classList.remove('hide');
+}
+function closeRulesClick() {
+    if (state != 1) {
+        newGame.classList.remove('hide');
+    } else {
+        shadow.classList.add('hide');
+    }
+    rules.classList.add('hide');
+} 
+function startClick() {
+    state = 1;
+    var number = parseInt(numberOfHoops.value);
+    if (typeof number == 'number' && number >= 3 && number <=7 ) {
+        var els = document.createDocumentFragment();
+        var el;
+        for (i = 0; i < number; i++ ) {
+            el = document.createElement('li');
+            el.className = 'hoop hoop' + j;
+            el.setAttribute('data-hoopID', j);
+            if (i == 0) {
+                el.setAttribute('draggable','true');
+            }
+            el.addEventListener('dragstart', handleDragStart, false);
+            el.addEventListener('dragleave', handleDragLeave, false);
+            el.addEventListener('drop', handleDrop, false);
+            el.addEventListener('dragend', handleDragEnd, false);
+            j--;
+            els.appendChild(el);
+        }
+        j = 7;
+        tower1.innerHTML = '';
+        tower1.appendChild(els);
+        newGame.classList.add('hide');
+        shadow.classList.add('hide');
+    } else {
+        alert('Enter a number from 3 to 7');
+    }
+}
+function resetMenuClick() {
+    newGame.classList.remove('hide');
+    shadow.classList.remove('hide');
+} 
 
 function handleDragStart(e) {
     // this / e.target is the source node.
@@ -27,7 +88,7 @@ function handleDragStart(e) {
         nextEl.setAttribute('draggable','true');
     };
     var li = this.parentNode.children[1];
-    this.parentNode.setAttribute('topHoopID', li ? li.getAttribute('hoopID') : '0');
+    this.parentNode.setAttribute('data-topHoopID', li ? li.getAttribute('data-hoopID') : '0');
 }
 
 function handleDragOver(e) {
@@ -42,7 +103,7 @@ function handleDragEnter(e) {
     // this / e.target is the current hover target.
     var ul = this.children[0];
     var li = ul.firstChild;
-    if (ul.getAttribute('topHoopID') <= dragSrcEl.getAttribute('hoopID')) {
+    if (ul.getAttribute('data-topHoopID') <= dragSrcEl.getAttribute('data-hoopID')) {
         ul.insertBefore(dragSrcEl, li);
     } else {
         return false;
@@ -74,8 +135,24 @@ function handleDragEnd(e) {
     if (nextEl) {
         nextEl.removeAttribute('draggable');
     };
-    this.parentNode.setAttribute('topHoopID', dragSrcEl.getAttribute('hoopID'));
+    this.parentNode.setAttribute('data-topHoopID', dragSrcEl.getAttribute('data-hoopID'));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
